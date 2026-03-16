@@ -14,9 +14,9 @@ fi
 if [[ -z "$FINGERS_BINARY" ]]; then
   if [[ "$INSTALL_BINARY" = "1" ]]; then
     if [[ "$(uname -s)" == "Darwin" ]]; then
-      tmux run-shell -b "bash $CURRENT_DIR/install-wizard.sh install-with-brew"
+      tmux run-shell "bash $CURRENT_DIR/install-wizard.sh install-with-brew"
     else
-      tmux run-shell -b "bash $CURRENT_DIR/install-wizard.sh download-binary"
+      tmux run-shell "bash $CURRENT_DIR/install-wizard.sh download-binary"
     fi
   else
     tmux run-shell -b "bash $CURRENT_DIR/install-wizard.sh"
