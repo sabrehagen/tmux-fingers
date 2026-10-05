@@ -47,5 +47,6 @@ else
   FINGERS_TERM="$TERM"
 fi
 
+tmux set-option -gu @fingers-install-binary
 tmux run "TERM=$FINGERS_TERM $FINGERS_BINARY load-config"
-exit $?
+tmux set-option -g @fingers-install-binary $INSTALL_BINARY
