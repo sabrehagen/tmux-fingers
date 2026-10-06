@@ -87,18 +87,12 @@ function download_binary() {
 
   mkdir -p $CURRENT_DIR/bin
 
-  echo "Getting latest release..."
-
-  url=$(curl -s "https://api.github.com/repos/sabrehagen/tmux-fingers/releases" | grep -o "https://.*${suffix}" | head -1)
-
-  if [[ -z "$url" ]]; then
-    echo "Could not find a release for tmux-fingers. Please try again later."
-    exit 1
-  fi
+  version=$(grep ^version $CURRENT_DIR/shard.yml | cut -f2 -d':' | tr -d ' ')
+  url=https://github.com/sabrehagen/tmux-fingers/releases/download/$version/tmux-fingers-$version-$suffix
 
   echo "Downloading binary from $url"
 
-  curl -L $url -o $CURRENT_DIR/bin/tmux-fingers
+  curl --fail -L $url -o $CURRENT_DIR/bin/tmux-fingers || exit 1
   chmod a+x $CURRENT_DIR/bin/tmux-fingers
 
   echo "Download complete!"

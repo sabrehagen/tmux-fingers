@@ -30,6 +30,7 @@ module Fingers::Commands
     @last_key_table : String = "root"
     @last_pane_id : String | Nil
     @mode : String = "default"
+    @swapped : Bool = false
     @pane_id : String = ""
     @active_pane : Tmux::Pane | Nil
     @patterns : Array(String) = [] of String
@@ -97,15 +98,18 @@ module Fingers::Commands
 
       track_tmux_state
 
-      show_hints
+      begin
+        show_hints
 
-      if Fingers.config.benchmark_mode
-        exit(0)
+        if Fingers.config.benchmark_mode
+          exit(0)
+        end
+
+        handle_input
+        process_result
+      ensure
+        teardown
       end
-
-      handle_input
-      process_result
-      teardown
     end
 
     private def patterns_from_options(pattern_names_option : String)
@@ -185,10 +189,12 @@ module Fingers::Commands
       # with tabs or double width characters
       if target_pane.window_zoomed_flag
         tmux.swap_panes(fingers_window.pane_id, target_pane.pane_id)
+        @swapped = true
         view.render
       else
         view.render
         tmux.swap_panes(fingers_window.pane_id, target_pane.pane_id)
+        @swapped = true
       end
     end
 
@@ -241,8 +247,8 @@ module Fingers::Commands
     end
 
     private def teardown
-      tmux.swap_panes(fingers_pane_id, target_pane.pane_id)
-      tmux.kill_pane(fingers_pane_id)
+      tmux.swap_panes(fingers_pane_id, target_pane.pane_id) if @swapped
+      tmux.kill_window(fingers_window.window_id)
 
       restore_last_pane
       restore_last_key_table
