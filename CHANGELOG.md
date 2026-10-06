@@ -1,3 +1,21 @@
+## 2.7.1 - 09 Jun 2026
+
+* fix parsing of @fingers-enabled-builtin-patterns ( Fixes #176 )
+* update install-wizard and readme to show that shards is required
+* relax parsing of --patterns flag in cli
+
+## 2.7.0 - 31 May 2026
+
+* improved performance: ~30% faster
+* added macOS arm64 binary to the release/download pipeline
+* added kubernetes-pod builtin pattern for pod names
+* fixed clipboard integration in WSL
+* fixed various styling rendering issues related to submatches and backdrop
+* removed tput dependency
+* improved error handling
+* refactored option parsing, now with stricter validation
+* updated to crystal 1.19
+
 ## 2.6.2 - 15 Feb 2026
 
 * Fix line jumping and backdrop-style rendering issues related with tabs,
