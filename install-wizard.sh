@@ -89,7 +89,7 @@ function download_binary() {
 
   echo "Getting latest release..."
 
-  url=$(curl -s "https://api.github.com/repos/Morantron/tmux-fingers/releases" | grep -o "https://.*${suffix}" | head -1)
+  url=$(curl -s "https://api.github.com/repos/sabrehagen/tmux-fingers/releases" | grep -o "https://.*${suffix}" | head -1)
 
   if [[ -z "$url" ]]; then
     echo "Could not find a release for tmux-fingers. Please try again later."
