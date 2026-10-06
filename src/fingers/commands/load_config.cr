@@ -71,7 +71,7 @@ class Fingers::Commands::LoadConfig < Cling::Command
 
   def setup_root_bindings
     `tmux bind-key #{Fingers.config.key} run-shell -b "#{cli} start "\#{pane_id}" >>#{Fingers::Dirs::LOG_PATH} 2>&1"`
-    `tmux bind-key #{Fingers.config.jump_key} run-shell -b "#{cli} start --mode jump "\#{pane_id}" >>#{Fingers::Dirs::LOG_PATH} 2>&1"`
+    `tmux bind-key #{Fingers.config.jump_key} run-shell -b "#{cli} start --mode jump "\#{pane_id}" >>#{Fingers::Dirs::LOG_PATH} 2>&1"` unless Fingers.config.jump_key.empty?
   end
 
   def setup_fingers_mode_bindings

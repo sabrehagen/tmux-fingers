@@ -268,7 +268,7 @@ module Fingers::Commands
     end
 
     private getter fingers_window : Tmux::Window do
-      tmux.create_window("[fingers]", "cat", 80, 24)
+      tmux.create_window("[fingers]", "cat", target_pane.pane_width, target_pane.pane_height)
     end
 
     private getter fingers_pane_id : String do
